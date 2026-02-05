@@ -19,7 +19,7 @@ def load_data(data_folder="data"):
     for csv_file in Path(data_folder).glob("*.csv"):
         df = pd.read_csv(csv_file)
 
-        # Get the ticker name from the column header (e.g., "SP500")
+        # Get the ticker name from the column header
         ticker = df.columns[1]
 
         # Standardize column names
@@ -59,10 +59,10 @@ def check_price_changes(data, check_config):
     for ticker in data["ticker"].unique():
         ticker_data = data[data["ticker"] == ticker].copy()
 
-        # shift(period) moves data down by N rows, letting us compare to N days ago
+        # add a new column with previous price shifted by 'period' days
         ticker_data["previous_price"] = ticker_data["price"].shift(period)
 
-        # Calculate percentage change
+        # Calculate percentage change and add as new column
         ticker_data["pct_change"] = (
             (ticker_data["price"] - ticker_data["previous_price"])
             / ticker_data["previous_price"]
@@ -72,10 +72,11 @@ def check_price_changes(data, check_config):
         # Use custom threshold if defined, otherwise use default
         threshold = custom_thresholds.get(ticker, default_threshold)
 
-        # Find rows where the change exceeds the threshold
+        # Find rows where the change exceeds the threshold and store as violations
         violations = ticker_data[abs(ticker_data["pct_change"]) > threshold]
         violations = violations[violations["pct_change"].notna()]
 
+        # store the results for each ticker
         for row in violations.to_dict("records"):
             results.append({
                 "ticker": ticker,
