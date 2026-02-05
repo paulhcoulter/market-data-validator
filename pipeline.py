@@ -74,18 +74,18 @@ def check_price_changes(data, check_config):
 
         # Find rows where the change exceeds the threshold
         violations = ticker_data[abs(ticker_data["pct_change"]) > threshold]
+        violations = violations[violations["pct_change"].notna()]
 
-        for _, row in violations.iterrows():
-            if pd.notna(row["pct_change"]):
-                results.append({
-                    "ticker": ticker,
-                    "check_type": check_name,
-                    "date": row["date"].strftime("%Y-%m-%d"),
-                    "previous_value": round(row["previous_price"], 2),
-                    "current_value": round(row["price"], 2),
-                    "change_percent": round(row["pct_change"], 2),
-                    "threshold": threshold
-                })
+        for row in violations.to_dict("records"):
+            results.append({
+                "ticker": ticker,
+                "check_type": check_name,
+                "date": row["date"].strftime("%Y-%m-%d"),
+                "previous_value": round(row["previous_price"], 2),
+                "current_value": round(row["price"], 2),
+                "change_percent": round(row["pct_change"], 2),
+                "threshold": threshold
+            })
 
     return results
 
