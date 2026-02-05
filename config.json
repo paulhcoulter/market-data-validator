@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "name": "daily",
+      "enabled": true,
+      "period": 1,
+      "default_threshold": 1.0,
+      "custom_thresholds": {
+        "SP500": 1.5
+      }
+    },
+    {
+      "name": "weekly",
+      "enabled": true,
+      "period": 5,
+      "default_threshold": 5.0,
+      "custom_thresholds": {}
+    }
+  ]
+}

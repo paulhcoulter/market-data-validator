@@ -1,0 +1,17 @@
+# Output files
+results.csv
+
+# Demo notebook (keeping locally for presentation)
+demo.ipynb
+
+# Requirements PDF
+Pass_Fail Check Pipeline.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Claude Code
+.claude/
