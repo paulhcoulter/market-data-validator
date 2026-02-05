@@ -57,13 +57,6 @@ To add a new check (e.g., monthly), just add another entry to the `checks` array
 
 The pipeline generates `results.csv` with: ticker, check_type, date, previous_value, current_value, change_percent, and threshold.
 
-## Design Choices
-
-- **JSON over YAML** - Built into Python, no extra dependencies, and I'm more familiar with it.
-- **pandas** - Industry-standard for tabular data in Python.
-- **Single reusable check function** - Instead of separate daily/weekly functions, one function takes a `period` parameter. Adding new checks is a config change, not a code change.
-- **File-based config vs database** - JSON file is simple and portable. A database would make sense if multiple users needed to edit configs simultaneously or we needed audit trails.
-
 ## AI Disclosure
 
 This solution was developed with assistance from Claude AI (Anthropic).
