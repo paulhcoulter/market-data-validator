@@ -30,6 +30,7 @@ def load_data(data_folder="data"):
     # Combine all dataframes into one
     combined = pd.concat(all_data, ignore_index=True)
     combined["date"] = pd.to_datetime(combined["date"])
+    combined = combined.dropna(subset=["price"])
     combined = combined.sort_values(["ticker", "date"]).reset_index(drop=True)
 
     return combined
