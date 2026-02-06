@@ -77,7 +77,7 @@ def check_price_changes(data, check_config):
         violations = violations[violations["pct_change"].notna()]
 
         # store the results for each ticker
-        for row in violations.to_dict("records"):
+        for _, row in violations.iterrows():
             results.append({
                 "ticker": ticker,
                 "check_type": check_name,
